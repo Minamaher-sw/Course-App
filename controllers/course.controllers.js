@@ -17,7 +17,7 @@ const getCourseById =(req,res)=>{
 const createCourse =(req ,res)=>{
     const errors =validationResult(req.body);
     if(!errors.isEmpty()){
-        return res.statu(500).json({message:errors.array()})
+        return res.status(500).json({message:errors.array()})
     }
     courses.push({id:courses.length +1 ,...req.body});
     res.json(courses[courses.length-1])
