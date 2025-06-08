@@ -1,6 +1,10 @@
 import { MongoClient } from "mongodb";
-
-const url = "mongodb+srv://menamosadef5:AXtRP2qWp5gzYMCA@cluster0.pvwc5cz.mongodb.net/?retryWrites=true&w=majority";
+import dotenv from 'dotenv';
+dotenv.config(); // Add this FIRST before any other imports
+const url = process.env.MONGO_URI;
+if (!url) {
+    throw new Error("MongoDB connection string is undefined!");
+}
 
 const client = new MongoClient(url, { serverSelectionTimeoutMS: 10000 });
 
