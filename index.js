@@ -9,6 +9,7 @@ app.use(express.json());
 
 app.use("/api/courses",courseRoute)
 
+
 app.listen(3001,"127.0.0.1",511,()=>{
     console.log("server is connected")
 }).on("error",(err)=>{
