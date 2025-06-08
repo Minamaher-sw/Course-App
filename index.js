@@ -2,7 +2,6 @@
 import express  from "express";
 import courseRoute from "./routes/course.routes.js";
 const app =express();
-
 // app.use(bodyParser.json());
 // parser
 app.use(express.json());
