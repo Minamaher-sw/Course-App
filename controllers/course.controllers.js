@@ -8,16 +8,31 @@ import appError from "../utils/appError.js";
 import StatusCodes from "../utils/statusCodes.js";
 const { OK, CREATED, BAD_REQUEST, NOT_FOUND } = StatusCodes;
 const getAllcourses = asyncWrapper(async (req, res) => {
+    const query =req.query;
     const coursesCollection = await getCollection("courses");
-    const courses = await coursesCollection.find().toArray();
-    res.status(CREATED).json({
-        status: "success",
-        data: { courses },
+    // pagination 
+    if(query || Object.keys(query).length !== 0) {
+        const limit = +query.limit;
+        const page = +query.page ;
+        const skip =(page -1) * limit;
+        const courses = await coursesCollection.find().limit(limit).skip(skip).toArray();
+        return res.status(CREATED).json({
+            status: "success",
+            data: { courses },
     });
+    }
+    else{
+        const courses = await coursesCollection.find().toArray();
+        return res.status(CREATED).json({
+                                status: "success",
+                                data: { courses },
+                            });
+    }
 });
 const getCourseById = asyncWrapper(async (req, res) => {
     const courseId = new ObjectId(req.params.courseId);
     const coursesCollection = await getCollection("courses");
+
     const course = await coursesCollection.findOne({ _id: courseId });
     if (!course) {
         const error = appError.create(
