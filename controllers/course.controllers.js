@@ -1,9 +1,13 @@
 
 import { validationResult } from "express-validator"
+import { getCollection } from "../data/db.connection.js"
+// import { courses } from "../data/cousres.data.js"
 
-import { courses } from "../data/cousres.data.js"
-const getAllcourses =(req,res)=>{
-    res.json(courses)
+const getAllcourses =async (req,res)=>{
+
+    const coursesCollection = await getCollection("courses");
+    const courses = await coursesCollection.find().toArray();
+    res.json(courses);
 }
 
 const getCourseById =(req,res)=>{
