@@ -4,12 +4,16 @@ import cors from "cors";
 
 import courseRoute from "./routes/course.routes.js";
 import httpStatusMessage from "./utils/httpStatusJsend.js"
+import userRouter from "./routes/user.route.js";
+import auth from "./middleware/auth.middleware.js";
 const app =express();
 // app.use(bodyParser.json());
 app.use(cors());
 // parser
 app.use(express.json());
 
+app.use("/api/user",userRouter)
+app.use(auth)
 app.use("/api/courses",courseRoute)
 
 
